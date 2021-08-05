@@ -1,5 +1,5 @@
 import React from "react";
-import { fade, makeStyles } from "@material-ui/core/styles";
+import { alpha, makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import { setFilter } from "_actions/books_actions";
 import { useDispatch } from "react-redux";
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   inputInput: {
     width: "100%",
     transition: theme.transitions.create("width"),
-    backgroundColor: fade(theme.palette.common.white, 0.15),
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
     marginLeft: `calc(1em + ${theme.spacing(4)}px)`,
     borderBottom: "1px solid #C9C9C9",
     "&:hover": {

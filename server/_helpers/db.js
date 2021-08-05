@@ -26,4 +26,5 @@ module.exports = {
   Marker: require("../models/Marker"),
   BookRating: require("../models/BookRating"),
   CommentRating: require("../models/CommentRating"),
+  Request: require("../models/Request"),
 };

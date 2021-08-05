@@ -33,6 +33,9 @@ export const URL_API = {
   getNumbers: "/api/statistics/getNumbers",
   getUserActivity: "/api/statistics/userActivity",
 
+  getRequest: "/api/request/admin/",
+  setRequest : "/api/request/",
+
   REGISTER: "/api/users/register",
   LOGIN: "/api/users/login",
 };

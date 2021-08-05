@@ -5,6 +5,7 @@ import "./mainContent.css";
 
 import AllBooks from "./AllBooksPage/AllBooks";
 import AddBooks from "./AddBooksPage/AddBooks";
+import RequestBooks from "./RequestBooks/RequestBooks";
 import UserBooks from "./UserBooksPages/UserBooks";
 import UserProfile from "./UserProfile/UserProfile";
 import StatisticsPage from "./Statistics/StatisticsPage";
@@ -42,6 +43,7 @@ export default function MainContent() {
             />
           </Route>
           <Route exact path="/add" component={AddBooks} />
+          <Route exact path="/request" component={RequestBooks} />
           <Route exact path="/user/:id" component={UserProfile} />
           <Route exact path="/statistics" component={StatisticsPage} />
         </Switch>

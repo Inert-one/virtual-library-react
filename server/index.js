@@ -1,15 +1,14 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const jwt = require("./_helpers/jwt");
 const errorHandler = require("./_helpers/error-handler");
 const path = require("path");
 
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(cookieParser());
 
 if (process.env.NODE_ENV === "production") {
@@ -26,6 +25,7 @@ app.use(
   "/api/commentsRating",
   require("./controllers/commentsRating.controller")
 );
+app.use("/api/request/", require("./controllers/request.controller"));
 app.use("/api/booksRating", require("./controllers/booksRating.controller"));
 app.use("/api/markers", require("./controllers/markers.controller"));
 app.use("/api/statistics", require("./controllers/statistics.controller"));

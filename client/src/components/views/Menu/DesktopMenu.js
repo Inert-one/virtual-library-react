@@ -7,6 +7,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import AddBoxIcon from "@material-ui/icons/AddBox";
+import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import Collapse from "@material-ui/core/Collapse";
 import MoreVertSharp from "@material-ui/icons/MoreVertSharp";
 import AddToHomeScreen from "@material-ui/icons/AddToHomeScreen";
@@ -22,14 +23,15 @@ import { setFilter, clearFilters } from "_actions/books_actions";
 
 import MenuStats from "./MenuStats";
 import categoriesAPI from "utils/categoriesAPI.js";
+// import usersAPI from "utils/usersAPI";
 
 export default function DesktopMenu({ history }) {
   const classes = useStyles();
   const dispatch = useDispatch();
-
+  // const [userType, setUserType] = useState("eluwina");
   const [open, setOpen] = useState(false);
   const [categories, setCategories] = useState(["loading data..."]);
-
+  const [userType, setUserType] = useState(0)
   const isLogged = false;
 
   useEffect(() => {
@@ -37,7 +39,15 @@ export default function DesktopMenu({ history }) {
       setCategories(res.map((c) => c.category));
     });
   }, []);
-
+  // useEffect(() => {
+  //   const userName = match.params.id;
+  //   usersAPI.getByUserName(userName, ({ userType, isFound, message }) => {
+  //     setUserType(userType);
+  //   });
+  // }, [userType]);
+  if (isLogged){
+  setUserType(JSON.parse(localStorage.getItem("user"))["userType"])
+  }
   const handleClick = () => {
     setOpen(!open);
   };
@@ -95,6 +105,7 @@ export default function DesktopMenu({ history }) {
           </ListItemIcon>
           <ListItemText primary="Marked books" />
         </ListItem>
+        {userType === 1?
         <ListItem
           button
           disabled={isLogged}
@@ -106,7 +117,19 @@ export default function DesktopMenu({ history }) {
             <AddBoxIcon />
           </ListItemIcon>
           <ListItemText primary="Add books" />
-        </ListItem>
+        </ListItem>:
+        <ListItem
+          button
+          disabled={isLogged}
+          onClick={() => {
+            history.push("/request");
+          }}
+        >
+          <ListItemIcon>
+            <HowToVoteIcon />
+          </ListItemIcon>
+          <ListItemText primary="Request books" />
+        </ListItem>}
         <ListItem
           button
           disabled={isLogged}

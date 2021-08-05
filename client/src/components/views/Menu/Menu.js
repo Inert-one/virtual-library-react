@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-import DesktopMenu from "./DektopMenu.js";
+import DesktopMenu from "./DesktopMenu.js";
 import MobileMenu from "./MobileMenu.js";
 
 export default function IconLabelTabs() {

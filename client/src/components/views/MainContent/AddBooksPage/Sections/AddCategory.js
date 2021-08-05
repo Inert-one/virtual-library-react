@@ -3,10 +3,19 @@ import categoriesAPI from "utils/categoriesAPI";
 import { Chip } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import { makeStyles } from "@material-ui/core/styles";
 
+const useStyles = makeStyles((theme) => ({
+  cat: {
+    padding: "5px",
+    margin: "5px"
+  }
+}
+))
 export default function AddCategory() {
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState(null);
+  const classes = useStyles();
 
   const loadCategories = () => {
     categoriesAPI.get((res) => {
@@ -34,6 +43,7 @@ export default function AddCategory() {
     });
   };
 
+
   return (
     <div>
       <h1>Categories:</h1>
@@ -42,6 +52,7 @@ export default function AddCategory() {
           onDelete={() => {
             handleDelete(cat._id);
           }}
+          className={classes.cat}
           label={cat.category}
         ></Chip>
       ))}

@@ -54,6 +54,9 @@ async function create(_book, userId) {
   _book.addedById = userId;
   _book.addedByUsername = user.username;
 
+  if (!(user.userType === 1))
+  throw new Error("Only Admins can add books !");
+
   const book = new Book(_book);
 
   return book.save();
