@@ -23,9 +23,12 @@ import { setFilter, clearFilters } from "_actions/books_actions";
 
 import MenuStats from "./MenuStats";
 import categoriesAPI from "utils/categoriesAPI.js";
-// import usersAPI from "utils/usersAPI";
+// import Book from "../AllBooksPage/Sections/Book";
+
+import usersAPI from "utils/usersAPI";
 
 export default function DesktopMenu({ history }) {
+  // const [books, setBooks] = useState([]);
   const classes = useStyles();
   const dispatch = useDispatch();
   // const [userType, setUserType] = useState("eluwina");
@@ -39,15 +42,21 @@ export default function DesktopMenu({ history }) {
       setCategories(res.map((c) => c.category));
     });
   }, []);
+
   // useEffect(() => {
-  //   const userName = match.params.id;
-  //   usersAPI.getByUserName(userName, ({ userType, isFound, message }) => {
-  //     setUserType(userType);
-  //   });
-  // }, [userType]);
+  //   fetchCallback((res) => setBooks(res));
+  // }, [fetchCallback]);
+
+// useEffect(() => {
+//     const userName = match.params.id;
+//     usersAPI.getByUserName(userName, ({ userType, isFound, message }) => {
+//       setUserType(userType);
+//     });
+//   }, [userType]);
   if (isLogged){
   setUserType(JSON.parse(localStorage.getItem("user"))["userType"])
-  }
+}
+console.log(userType)
   const handleClick = () => {
     setOpen(!open);
   };

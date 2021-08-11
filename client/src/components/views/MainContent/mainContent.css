@@ -246,3 +246,21 @@ input.error {
   height: 5px;
   margin-top: -12px;
 }
+/* .MuiPaper-root{
+  border-radius: 30px;
+} */
+
+.MuiPaper-root.MuiDialog-paper.MuiDialog-paperScrollPaper.MuiDialog-paperWidthSm.MuiPaper-elevation24.MuiPaper-rounded {
+  max-width: 600px;
+  border-radius: 20px;
+  background-color: rgb(103, 0, 238);
+}
+.registerContainer
+input:-webkit-autofill, .registerContainer
+input:-webkit-autofill:hover, .registerContainer 
+input:-webkit-autofill:focus, .registerContainer
+input:-webkit-autofill:active
+{
+  box-shadow: 0 0 0 30px rgba(103, 0, 238, 0.651) inset !important;
+ -webkit-box-shadow: 0 0 0 30px rgba(103, 0, 238, 0.651) inset !important;
+}

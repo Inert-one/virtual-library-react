@@ -49,7 +49,7 @@ export default function Pagination() {
       component="div"
       count={booksQuantity}
       page={page}
-      onChangePage={handleChangePage}
+      onPageChange={handleChangePage}
       rowsPerPage={itemsPerPage}
       rowsPerPageOptions={[6, 12, 24, 36, 48, 96]}
       onChangeRowsPerPage={handleChangeRowsPerPage}

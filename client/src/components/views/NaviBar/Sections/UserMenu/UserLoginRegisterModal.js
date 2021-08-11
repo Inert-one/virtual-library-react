@@ -3,6 +3,7 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import Slide from "@material-ui/core/Slide";
 
+
 import UserLoginRegisterForm from "./UserLoginRegisterForm";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -11,7 +12,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function UserLoginRegisterModal({ title, type }) {
   const [open, setOpen] = useState(false);
-
   const toggleModal = () => {
     setOpen(!open);
   };
@@ -30,6 +30,7 @@ export default function UserLoginRegisterModal({ title, type }) {
         TransitionComponent={Transition}
         keepMounted
         onClose={toggleModal}
+        className = {"registerContainer"}
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
