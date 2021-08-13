@@ -14,7 +14,7 @@ export default function UserMenu({ type }) {
   const history = useHistory();
 
   const user = useSelector((state) => state.user);
-
+  
   const handleLogout = () => {
     localStorage.removeItem("user");
     dispatch(logoutUser());

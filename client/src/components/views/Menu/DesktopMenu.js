@@ -20,12 +20,13 @@ import BarChartIcon from "@material-ui/icons/BarChart";
 
 import { useDispatch } from "react-redux";
 import { setFilter, clearFilters } from "_actions/books_actions";
+import { useSelector } from "react-redux";
 
 import MenuStats from "./MenuStats";
 import categoriesAPI from "utils/categoriesAPI.js";
 // import Book from "../AllBooksPage/Sections/Book";
 
-import usersAPI from "utils/usersAPI";
+// import usersAPI from "utils/usersAPI";
 
 export default function DesktopMenu({ history }) {
   // const [books, setBooks] = useState([]);
@@ -33,30 +34,20 @@ export default function DesktopMenu({ history }) {
   const dispatch = useDispatch();
   // const [userType, setUserType] = useState("eluwina");
   const [open, setOpen] = useState(false);
+  const user = useSelector((state) => state.user);
   const [categories, setCategories] = useState(["loading data..."]);
-  const [userType, setUserType] = useState(0)
   const isLogged = false;
+  const userType  = user !== null ? user.userType : 0;
+  
 
+  console.log(userType)
   useEffect(() => {
     categoriesAPI.get((res) => {
       setCategories(res.map((c) => c.category));
     });
   }, []);
 
-  // useEffect(() => {
-  //   fetchCallback((res) => setBooks(res));
-  // }, [fetchCallback]);
 
-// useEffect(() => {
-//     const userName = match.params.id;
-//     usersAPI.getByUserName(userName, ({ userType, isFound, message }) => {
-//       setUserType(userType);
-//     });
-//   }, [userType]);
-  if (isLogged){
-  setUserType(JSON.parse(localStorage.getItem("user"))["userType"])
-}
-console.log(userType)
   const handleClick = () => {
     setOpen(!open);
   };
