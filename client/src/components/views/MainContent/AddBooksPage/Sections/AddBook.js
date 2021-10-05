@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { S3_BUCKET, MY_BUCKET, DESTINATION } from '../../../../../utils/uploadAPI';
 
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
@@ -25,6 +26,7 @@ const exampleBook = {
   pages: true,
   year: "2010",
   description: "Description of the book.",
+  fileName: "",
   image: "https://www.tryngo.ch/img/no-img.jpg",
   rating: false,
 };
@@ -49,6 +51,17 @@ export default function AddBook() {
   const [isSnackbarOpen, setSnackbarOpen] = useState(false);
   const [response, setResponse] = useState(false);
   const [categories, setCategories] = useState([]);
+  
+  
+    const [selectedFile, setSelectedFile] = useState();
+    const [isFilePicked, setIsFilePicked] = useState(false);
+  
+    const changeHandler = (event) => {
+      setSelectedFile(event.target.files[0]);
+      setBook({ ...book, fileName: event.target.files[0].name });
+      setIsFilePicked(true);
+    };
+
   const handleBookInput = ({ target: { name, value } }) => {
     setBook({ ...book, [name]: value });
   };
@@ -66,10 +79,40 @@ export default function AddBook() {
     setSnackbarOpen(false);
   };
 
-  const handleSaveBook = (book) => {
+  const handleSaveBook = (book, file) => {
     if (!book.rating)
       return handleOpenSnackbar({ isSaved: false, message: "Rate the book" });
     booksAPI.create(book, (res) => handleOpenSnackbar(res));
+
+    // Upload book
+    const destination = DESTINATION;
+    const pathName = `${ destination }/${ file.name }`;
+
+    // setBook({ ...book, fileName: file.name });
+    const contentTypes = {
+      'pdf': 'application/pdf',
+      'docx': 'application/docx',
+      'txt': 'application/txt'
+    };
+
+    const getContentType = file => {
+      const extension = file.split('.').pop();
+      return contentTypes[extension];
+    }
+
+    const params = {
+      ACL: 'public-read',
+      Body: file,
+      Bucket: S3_BUCKET,
+      Key: pathName,
+      ContentType: getContentType(file.name)
+    };
+
+    MY_BUCKET
+      .putObject(params)
+      .send(err => {
+        if (err) console.log(err);
+      });
   };
 
   useEffect(() => {
@@ -79,13 +122,36 @@ export default function AddBook() {
   return (
     <>
       <h1>Add new book to your library: </h1>
+      <div
+      alignContent="center" container >
+      <input
+      type="file"
+      accept=".pdf, .docx, .txt"
+      style={{ display: 'none' }}
+      id="contained-button-file"
+      onChange={changeHandler}
+      onInputChange={(_, selectedFile) => {
+        setBook({ ...book, fileName: selectedFile.name });
+      }}
+    />
+    <label htmlFor="contained-button-file">
+      <Button variant="contained" color="primary" component="span">
+        Upload
+      </Button>
+    </label>
+    {isFilePicked ? (
+					<p>{selectedFile.name}</p>
+				
+			) : (
+				<p>Select a file to show details</p>
+			)}</div>
       <Grid
         alignContent="center"
         container
         className={classes.root}
         spacing={1}
       >
-        <Grid container item xs={12} md={6} spacing={2}>
+        <Grid container item xs={12} md={8} spacing={2}>
           <Grid item md={10} xs={12}>
             <TextField
               className={classes.txtField}
@@ -194,13 +260,13 @@ export default function AddBook() {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => handleSaveBook(book)}
+              onClick={() => handleSaveBook(book, selectedFile)}
             >
               SAVE THE BOOK
             </Button>
           </Grid>
         </Grid>
-        <Grid container item xs={12} md={6} spacing={3}>
+        <Grid container item xs={12} md={4} spacing={3}>
           <div className="preview">
             <h4>Preview</h4>
             <Book

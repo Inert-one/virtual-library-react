@@ -7,6 +7,7 @@ const BookSchema = new Schema(
     name: { type: String, required: true },
     author: { type: String, required: true },
     category: { type: String, required: true },
+    fileName: {type: String, required: true},
     description: String,
     pages: {
       type: Number,
@@ -28,6 +29,9 @@ const BookSchema = new Schema(
     isAvailable: {
       type: Boolean,
       default: true,
+    },
+    url: {
+      type: String
     },
   },
   { timestamps: true }

@@ -38,4 +38,7 @@ export const URL_API = {
 
   REGISTER: "/api/users/register",
   LOGIN: "/api/users/login",
+
+  // upload : "/api/book/upload",
+  // download : "/api/book/files/",
 };

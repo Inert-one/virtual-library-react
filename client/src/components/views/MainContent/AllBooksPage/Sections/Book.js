@@ -7,10 +7,11 @@ import Button from "@material-ui/core/Button";
 import Rating from "@material-ui/lab/Rating";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-
+import MoreVertIcon from '@material-ui/icons//MoreVert';
 import markersAPI from "utils/markersAPI";
 import RateBookAPI from "utils/bookRateAPI";
 import isLogged from "utils/isLogged";
+import { S3_BUCKET, MY_BUCKET, DESTINATION } from '../../../../../utils/uploadAPI';
 
 const cardSizes = [4, 6];
 
@@ -45,6 +46,43 @@ export default function Book({
     book.addedByUsername && history.push(`/user/${book.addedByUsername}`);
   };
 
+  const destination = DESTINATION;
+  const pathName = `${ destination }/${ book.fileName }`;
+
+  const downloadBook = () =>{
+    function downloadBlob(blob, name = `${book.fileName}`) {
+      const blobUrl = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = name;
+      document.body.appendChild(link);
+      link.dispatchEvent(
+        new MouseEvent('click', {
+          bubbles: true,
+          cancelable: true,
+          view: window,
+        })
+      );
+
+      document.body.removeChild(link);}
+    try{
+      var params = {
+        Bucket : S3_BUCKET,
+        Key: pathName
+      };
+      MY_BUCKET
+      .getObject(params, (err, data) => {
+        if (err) {
+          console.log(err, err.stack);
+        } else {
+          let fileBlob = new Blob([data.Body]);
+          downloadBlob(fileBlob, `${book.fileName}`);
+        }
+      });
+    }catch(err){
+      console.error(err)
+    }
+  }
   useEffect(() => {
     RateBookAPI.getAverageBookRate(book._id, (res) => {
       setAverageRate(res.value);
@@ -98,7 +136,7 @@ export default function Book({
               <div className="books__buttons">
                 <Button
                   variant={"contained"}
-                  size="small"
+                  size="smaller"
                   color="primary"
                   className={classes.margin}
                   onClick={
@@ -114,12 +152,23 @@ export default function Book({
                   {isMarked ? "Unmark" : "mark"}
                 </Button>
                 <Button
+                variant={"contained"}
+                size="smaller"
+                color="primary"
+                className={classes.margin}
+                onClick={
+                  downloadBook}
+              >
+                Download
+              </Button>    
+                <Button
                   size="small"
                   color="primary"
                   className={classes.margin}
+                  style={{padding: "0px", margin: "0px"}}
                   onClick={handleModalOpen}
                 >
-                  see more
+                  <MoreVertIcon fontSize="small"/>
                 </Button>
               </div>
             )}

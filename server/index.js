@@ -29,10 +29,13 @@ app.use("/api/request/", require("./controllers/request.controller"));
 app.use("/api/booksRating", require("./controllers/booksRating.controller"));
 app.use("/api/markers", require("./controllers/markers.controller"));
 app.use("/api/statistics", require("./controllers/statistics.controller"));
+app.use("/api/book", require("./controllers/files.controller"));
 
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));
 });
+
+global.__basedir = __dirname;
 
 app.use(errorHandler);
 

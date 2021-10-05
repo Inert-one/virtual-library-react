@@ -213,6 +213,8 @@
 .books__buttons {
   display: flex;
   height: auto;
+  flex-wrap: nowrap;
+  align-items: center;
 }
 
 .filterMainOptions {
